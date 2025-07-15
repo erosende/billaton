@@ -5,7 +5,6 @@ import {
   Users, 
   Building2
 } from 'lucide-react'
-import './App.css'
 
 const App = () => {
   const [activeNav, setActiveNav] = useState('documents')
