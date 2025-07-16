@@ -1,0 +1,22 @@
+.recipients-page {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.recipients-page .participant-list-wrapper{
+  justify-content: center;
+  width: 18%;
+  height: 800px;
+  margin-top: 6px;
+  margin-left: 10px;
+  margin-right: 3px;
+}
+
+.recipients-page .participant-data-wrapper{
+  width: 82%;
+  height: 800px;
+  margin-top: 6px;
+  margin-right: 10px;
+  margin-left: 3px;
+}

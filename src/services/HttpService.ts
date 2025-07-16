@@ -1,0 +1,146 @@
+import axios, { AxiosError } from 'axios';
+import type { AxiosInstance, AxiosResponse } from 'axios';
+
+// Base response type from API documentation
+interface BaseResponse<T = any> {
+  error?: string;
+  data: T;
+}
+
+// HTTP service configuration
+interface HttpServiceConfig {
+  baseURL: string;
+  timeout?: number;
+}
+
+// Error response type
+interface ErrorResponse {
+  error?: string;
+  [key: string]: any;
+}
+
+// Create axios instance with default configuration
+const createHttpClient = (config: HttpServiceConfig): AxiosInstance => {
+  const client = axios.create({
+    baseURL: config.baseURL,
+    timeout: config.timeout || 10000,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  // Request interceptor for adding auth tokens if needed
+  client.interceptors.request.use(
+    (config) => {
+      // Add authorization header if token exists
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  // Response interceptor for handling common errors
+  client.interceptors.response.use(
+    (response) => response,
+    (error: AxiosError) => {
+      // Handle common HTTP errors
+      if (error.response?.status === 401) {
+        // Handle unauthorized access
+        localStorage.removeItem('authToken');
+        // Could redirect to login page here
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return client;
+};
+
+// HTTP service class
+class HttpService {
+  private client: AxiosInstance;
+
+  constructor(config: HttpServiceConfig) {
+    this.client = createHttpClient(config);
+  }
+
+  // GET method
+  async get<T>(url: string, params?: Record<string, any>): Promise<BaseResponse<T>> {
+    try {
+      const response: AxiosResponse<BaseResponse<T>> = await this.client.get(url, {
+        params,
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error as AxiosError<ErrorResponse>);
+    }
+  }
+
+  // POST method
+  async post<T>(url: string, data?: any): Promise<BaseResponse<T>> {
+    try {
+      const response: AxiosResponse<BaseResponse<T>> = await this.client.post(url, data);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error as AxiosError<ErrorResponse>);
+    }
+  }
+
+  // PUT method
+  async put<T>(url: string, data?: any): Promise<BaseResponse<T>> {
+    try {
+      const response: AxiosResponse<BaseResponse<T>> = await this.client.put(url, data);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error as AxiosError<ErrorResponse>);
+    }
+  }
+
+  // DELETE method
+  async delete<T>(url: string): Promise<BaseResponse<T>> {
+    try {
+      const response: AxiosResponse<BaseResponse<T>> = await this.client.delete(url);
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error as AxiosError<ErrorResponse>);
+    }
+  }
+
+  // Error handler
+  private handleError = (error: AxiosError<ErrorResponse>): Error => {
+    if (error.response) {
+      // Server responded with error status
+      const status = error.response.status;
+      const message = error.response.data?.error || error.message;
+      return new Error(`HTTP ${status}: ${message}`);
+    } else if (error.request) {
+      // Request was made but no response received
+      return new Error('Network error: No response received from server');
+    } else {
+      // Something else happened
+      return new Error(`Request error: ${error.message}`);
+    }
+  };
+}
+
+// Create and export the HTTP service instance with Billaton API base URL
+const httpService = new HttpService({
+  baseURL: 'http://foundation-production-1774.up.railway.app/api/billaton',
+  timeout: 15000,
+});
+
+export const useHttpService = () => {
+  return {
+    get: httpService.get.bind(httpService),
+    post: httpService.post.bind(httpService),
+    put: httpService.put.bind(httpService),
+    delete: httpService.delete.bind(httpService),
+  };
+};
+
+export default httpService;

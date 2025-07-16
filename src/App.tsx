@@ -1,10 +1,12 @@
-import { AppShell, NavLink, Title, Group, Image, Divider } from '@mantine/core'
+import { AppShell, NavLink, Title, Group, Image } from '@mantine/core'
 import { useState } from 'react'
 import { 
   FileText, 
   Users, 
   Building2
 } from 'lucide-react'
+import './App.css'
+import RecipientsPage from './pages/RecipientsPage'
 
 const App = () => {
   const [activeNav, setActiveNav] = useState('documents')
@@ -23,14 +25,13 @@ const App = () => {
     >
       <AppShell.Navbar p="md">
         <Group mb="xl">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+          <div className="logo-container">
             <Image src="/billaton_logo.png" alt="Billaton" width={100} height={100} fit='contain' />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <Title order={3}>BILL</Title>
-              <Title order={3}>A</Title>
-              <Title order={3}>TON</Title>
+            <div className="logo-text-container">
+              <Title order={3} className="logo-title">BILL</Title>
+              <Title order={3} className="logo-title">A</Title>
+              <Title order={3} className="logo-title">TON</Title>
             </div>
-            
           </div>
         </Group>
 
@@ -67,19 +68,18 @@ const App = () => {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Title order={1} mb="lg" style={{ paddingLeft: '15px' }}>
+        <Title order={1} mb="lg" className="main-title">
           {activeNav === 'documents' && 'Documentos'}
           {activeNav === 'recipients' && 'Clientes'}
           {activeNav === 'issuers' && 'Facturadores'}
         </Title>
-        <Divider />
         
         <div>
           {activeNav === 'documents' && (
             <p>Gestiona tus facturas y documentos de facturación aquí.</p>
           )}
           {activeNav === 'recipients' && (
-            <p>Gestiona tus clientes y sus información.</p>
+            <RecipientsPage />
           )}
           {activeNav === 'issuers' && (
             <p>Gestiona tus facturadores y sus configuraciones.</p>

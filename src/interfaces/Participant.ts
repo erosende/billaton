@@ -1,4 +1,6 @@
-export type Participant = {
+import type { Address } from "../interfaces/Address";
+
+export interface Participant {
     participantId: number;
     identificationNumber: string;
     identificationType: string;
@@ -11,11 +13,11 @@ export type Participant = {
     address: Address;
 }
 
-export type Address = {
-    addressId: number;
-    addressLineOne: string;
-    addressLineTwo: string;
-    postalCode: string;
-    city: string;
-    province: string;
-}
+export interface IssuerConfig {
+    configId: number;
+    issuerId: number;
+    vat: number;
+    paymentAccountNumber: string;
+    logoPath?: string;
+  }
+
