@@ -37,33 +37,29 @@
 
 .name-label {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  padding-right: 10px;
   gap: 10px;
   width: 30%;
 }
 
 .surnames-label {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
   width: 70%;
 }
 
 .identification-number-label {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  padding-right: 10px;
   gap: 10px;
-  width: 100%;
-}
-
-.label {
-  font-family: 'Roboto', 'Courier New', monospace;
-  font-size: 1.3rem;
-  font-weight: bold;
+  width: 30%;
 }
 
 .value {
-  padding-top: 2px;
   font-family: 'Roboto', 'Courier New', monospace;
   font-size: 1.2rem;
+  max-width: 400px;
 }
