@@ -13,6 +13,8 @@ const RecipientsPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
 
   const recipientService = participantService();
 
@@ -55,7 +57,11 @@ const RecipientsPage = () => {
       </div>
     
         <div className="participant-data-wrapper">
-          <ParticipantData participant={selectedRecipient} />
+          <ParticipantData 
+            participant={selectedRecipient} 
+            isEditing={isEditing} 
+            setIsEditing={setIsEditing} 
+          />
         </div>
       
 
