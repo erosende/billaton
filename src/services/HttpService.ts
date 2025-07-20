@@ -129,8 +129,13 @@ class HttpService {
 }
 
 // Create and export the HTTP service instance with Billaton API base URL
+// const httpService = new HttpService({
+//   baseURL: 'https://foundation-production-1774.up.railway.app/api/billaton',
+//   timeout: 15000,
+// });
+
 const httpService = new HttpService({
-  baseURL: 'http://foundation-production-1774.up.railway.app/api/billaton',
+  baseURL: 'http://localhost:8080/api/billaton',
   timeout: 15000,
 });
 

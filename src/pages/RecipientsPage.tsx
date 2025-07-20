@@ -14,10 +14,11 @@ const RecipientsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [isCreating, setIsCreating] = useState(false);
+  //const [isCreating, setIsCreating] = useState(false);
 
   const recipientService = participantService();
 
+  // TODO add a debounce to the search term
   useEffect(() => {
     const fetchRecipients = async () => {
       try {
@@ -30,7 +31,7 @@ const RecipientsPage = () => {
       }
     }
     fetchRecipients();
-  }, [recipientService, searchTerm]);
+  }, [searchTerm]);
 
   const handleCloseErrorModal = () => {
     setError(null);

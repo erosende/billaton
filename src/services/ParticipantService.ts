@@ -24,6 +24,16 @@ export const participantService = () => {
     }
   };
 
+  const updateParticipant = async (participantId: number, participantData: Participant): Promise<Participant> => {
+    try {
+      const response = await put<Participant>(`/participants/recipients/${participantId}`, participantData);
+      return response.data;
+    } catch (error) {
+      console.error('Error updating participant:', error);
+      throw error;
+    }
+  };
+
   const updateIssuerConfig = async (
     participantId: number,
     configId: number,
@@ -50,6 +60,7 @@ export const participantService = () => {
   return {
     createRecipientParticipant,
     getParticipants,
+    updateParticipant,
     updateIssuerConfig,
     getIssuerConfig,
   };
