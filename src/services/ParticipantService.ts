@@ -2,7 +2,7 @@ import { useHttpService } from './HttpService';
 import type { Participant, IssuerConfig } from '../interfaces/Participant';
 
 export const participantService = () => {
-  const { get, post, put } = useHttpService();
+  const { get, post, put, del } = useHttpService();
 
   const createRecipientParticipant = async (participantData: Participant): Promise<Participant> => {
     try {
@@ -57,11 +57,21 @@ export const participantService = () => {
     }
   };
 
+  const deleteRecipientParticipant = async (participantId: number): Promise<void> => {
+    try {
+      await del<void>(`/participants/recipients/${participantId}`);
+    } catch (error) {
+      console.error('Error deleting client:', error);
+      throw error;
+    }
+  };
+
   return {
     createRecipientParticipant,
     getParticipants,
     updateParticipant,
     updateIssuerConfig,
     getIssuerConfig,
+    deleteRecipientParticipant,
   };
 }; 

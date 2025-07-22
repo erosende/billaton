@@ -17,6 +17,7 @@
   font-size: 1.75rem;
   margin-bottom: -10px;
   margin-top: 0;
+  color: var(--app-text-color);
 }
 
 .main-title {
@@ -24,5 +25,36 @@
   padding-bottom: 5px;
   padding-left: 15px;
   font-family: 'Roboto', 'Courier New', monospace;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--app-border-color);
+  color: var(--app-text-color);
+}
+
+/* Theme toggle button styles */
+.theme-toggle-button {
+  color: var(--app-text-color) !important;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--app-accent-color) !important;
+  color: white !important;
+  transform: scale(1.05);
+}
+
+.theme-toggle-button:focus {
+  outline: 2px solid var(--app-accent-color);
+  outline-offset: 2px;
+}
+
+/* Ensure AppShell components follow theme */
+.mantine-AppShell-main {
+  background-color: var(--app-content-bg) !important;
+  transition: background-color 0.3s ease;
+}
+
+.mantine-AppShell-navbar {
+  background-color: var(--app-navbar-bg) !important;
+  border-right: 1px solid var(--app-border-color) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }

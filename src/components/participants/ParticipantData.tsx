@@ -1,5 +1,5 @@
 import { Pencil, Save, Trash, X } from "lucide-react";
-import type { Participant } from "../../interfaces/Participant";
+import { emptyParticipant, type Participant } from "../../interfaces/Participant";
 import './ParticipantData.css';
 import { Button, ButtonGroup, Divider, Modal, Text, Group } from "@mantine/core";
 import { useEffect, useState } from "react";
@@ -8,22 +8,32 @@ import { participantService } from "../../services/ParticipantService";
 const ParticipantData = ({
   participant,
   isEditing,
-  setIsEditing
+  setIsEditing,
+  isCreating,
+  setIsCreating,
+  onUpdate,
+  onDelete,
+  onAdd
 }: {
   participant: Participant | null,
   isEditing: boolean,
-  setIsEditing: (isEditing: boolean) => void
+  setIsEditing: (isEditing: boolean) => void,
+  isCreating: boolean,
+  setIsCreating: (isCreating: boolean) => void,
+  onUpdate?: () => void,
+  onDelete?: () => void,
+  onAdd?: () => void
   }) => {
    
     const [formData, setFormData] = useState<Participant | null>(null);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   useEffect(() => {
-    setFormData(participant ? { ...participant } : null);
-    if (participant === null) {
+    setFormData(participant ? { ...participant } : emptyParticipant);
+    if (participant === null && !isCreating) {
       setIsEditing(false);
     }
-  }, [participant, setIsEditing]);
+  }, [participant, setIsEditing, setIsCreating]);
 
   const handleFieldChange = (fieldPath: string, value: string | number) => {
     if (!formData) return;
@@ -56,23 +66,34 @@ const ParticipantData = ({
 
   const handleSave = async () => {
     if (formData) {
-      await participantService().updateParticipant(formData.participantId, formData);
+      if (isCreating) {
+        await participantService().createRecipientParticipant(formData);
+        onAdd?.();
+      } else {
+        await participantService().updateParticipant(formData.participantId, formData);
+        onUpdate?.();
+      }
     }
     console.log('Saving data:', formData);
     setIsEditing(false);
+    setIsCreating(false);
   }
 
   const handleCancel = () => {
     setFormData(participant ? { ...participant } : null);
     setIsEditing(false);
+    setIsCreating(false);
   }
 
   const handleDelete = () => {
     setIsDeleteModalOpen(true);
   }
 
-  const handleConfirmDelete = () => {
-    // Here you would typically call an API to delete the participant
+  const handleConfirmDelete = async () => {
+    if (formData) {
+      await participantService().deleteRecipientParticipant(formData.participantId);
+      onDelete?.();
+    }
     console.log('Deleting participant:', formData);
     setIsDeleteModalOpen(false);
     setIsEditing(false);
@@ -90,11 +111,11 @@ const ParticipantData = ({
     <>
       <div className="participant-data-container">
         <div className="participant-data-title-container">
-          <h2 className="participant-data-title">Información del cliente</h2>
+          <h2 className="participant-data-title">{isCreating ? "Crear nuevo cliente" : "Información del cliente"}</h2>
           <ButtonGroup className="participant-data-button-group">
-            {isEditing ? (
+            {isEditing || isCreating ? (
               <Button
-                disabled={participant === null}
+                disabled={participant === null && !isCreating && !isEditing}
                 variant="subtle"
                 color="blue"
                 leftSection={<Save size={20} />}
@@ -115,9 +136,9 @@ const ParticipantData = ({
                 Editar
               </Button>
             )}
-            {isEditing ? (
+            {isEditing || isCreating ? (
               <Button
-                disabled={participant === null}
+                disabled={participant === null && !isCreating && !isEditing}
                 variant="subtle"
                 color="red"
                 leftSection={<X size={20} />}
@@ -148,14 +169,14 @@ const ParticipantData = ({
             className="name-label" 
             label="Nombre" 
             value={formData?.name || ""} 
-            isEditing={isEditing}
+            enabled={isEditing || isCreating}
             handleChange={handleInputChange('name')}
           />
           <LabelValue 
             className="surnames-label" 
             label="Apellidos" 
             value={formData?.surnames || ""} 
-            isEditing={isEditing} 
+            enabled={isEditing || isCreating} 
             handleChange={handleInputChange('surnames')}
           />
         </div>
@@ -165,14 +186,14 @@ const ParticipantData = ({
             className="identification-type-label" 
             label="Tipo de identificación" 
             value={formData?.identificationTypeId?.toString() || ""} 
-            isEditing={isEditing} 
+            enabled={isEditing || isCreating} 
             handleChange={handleSelectChange('identificationTypeId')} 
           />
           <LabelValue 
             className="identification-number-label" 
             label={"Número de identificación"} 
             value={formData?.identificationNumber || ""} 
-            isEditing={isEditing} 
+            enabled={isEditing || isCreating} 
             handleChange={handleInputChange('identificationNumber')} 
           />
         </div>
@@ -182,14 +203,14 @@ const ParticipantData = ({
             className="email-label" 
             label="Correo electrónico" 
             value={formData?.email || ""} 
-            isEditing={isEditing} 
+            enabled={isEditing || isCreating} 
             handleChange={handleInputChange('email')} 
           />
           <LabelValue 
             className="phone-label" 
             label="Teléfono" 
             value={formData?.phoneNumber || ""} 
-            isEditing={isEditing}
+            enabled={isEditing || isCreating}
             handleChange={handleInputChange('phoneNumber')}
           />
         </div>
@@ -202,7 +223,7 @@ const ParticipantData = ({
             className="address-label-line-one"
             label="Línea 1"
             value={formData?.address?.addressLineOne || ""}
-            isEditing={isEditing}
+            enabled={isEditing || isCreating}
             handleChange={handleInputChange('address.addressLineOne')}
           />
         </div>
@@ -212,7 +233,7 @@ const ParticipantData = ({
             className="address-label-line-two" 
             label="Línea 2" 
             value={formData?.address?.addressLineTwo || ""} 
-            isEditing={isEditing} 
+            enabled={isEditing || isCreating} 
             handleChange={handleInputChange('address.addressLineTwo')} 
           />
         </div>
@@ -222,21 +243,21 @@ const ParticipantData = ({
             className="address-label-postal-code" 
             label="Código postal" 
             value={formData?.address?.postalCode || ""} 
-            isEditing={isEditing} 
+            enabled={isEditing || isCreating} 
             handleChange={handleInputChange('address.postalCode')} 
           />
           <LabelValue 
             className="address-label-city" 
             label="Ciudad" 
             value={formData?.address?.city || ""} 
-            isEditing={isEditing} 
+            enabled={isEditing || isCreating} 
             handleChange={handleInputChange('address.city')} 
           />
           <LabelValue 
             className="address-label-province" 
             label="Provincia" 
             value={formData?.address?.province || ""} 
-            isEditing={isEditing}
+            enabled={isEditing || isCreating}
             handleChange={handleInputChange('address.province')} 
           />
         </div>
@@ -278,20 +299,20 @@ const ParticipantData = ({
   )
 }
 
-const LabelValue = ({ className, label, value, isEditing, handleChange }: { className: string, label: string, value: string | undefined, isEditing: boolean, handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+const LabelValue = ({ className, label, value, enabled, handleChange }: { className: string, label: string, value: string | undefined, enabled: boolean, handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
   return (
     <div className={className}>
       <p className="label">{label}</p>
-      <input className="value" disabled={!isEditing} value={value} onChange={handleChange} />
+      <input className="value" disabled={!enabled} value={value} onChange={handleChange} />
     </div>
   )
 }
 
-const LabelSelect = ({ className, label, value, isEditing, handleChange }: { className: string, label: string, value: string | undefined, isEditing: boolean, handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void }) => {
+const LabelSelect = ({ className, label, value, enabled, handleChange }: { className: string, label: string, value: string | undefined, enabled: boolean, handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void }) => {
   return (
     <div className={className}>
       <p className="label">{label}</p>
-      <select className="value-select" disabled={!isEditing} value={value} onChange={handleChange}>
+      <select className="value-select" disabled={!enabled} value={value} onChange={handleChange}>
         <option value="1">NIF</option>
         <option value="2">DNI</option>
       </select>
