@@ -1,0 +1,22 @@
+.issuers-page {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.issuers-page .participant-list-wrapper {
+  justify-content: center;
+  width: 22%;
+  height: 770px;
+  margin-top: 6px;
+  margin-left: 10px;
+  margin-right: 3px;
+}
+
+.issuers-page .issuer-data-wrapper{
+  width: 78%;
+  height: 770px;
+  margin-top: 6px;
+  margin-right: 10px;
+  margin-left: 3px;
+}

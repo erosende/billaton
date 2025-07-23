@@ -1,5 +1,5 @@
 :root {
-  font-family: 'Roboto', 'Courier New', monospace;
+  font-family: 'Roboto', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -58,7 +58,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto', 'Courier New', monospace;
+  font-family: 'Roboto', sans-serif;
   line-height: 1.1;
   color: var(--app-text-color);
   transition: color 0.3s ease;

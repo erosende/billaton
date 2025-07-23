@@ -4,7 +4,8 @@ import { participantService } from "../services/ParticipantService";
 import { Modal, Text } from "@mantine/core";
 import ParticipantList from "../components/participants/ParticipantList";
 import './RecipientsPage.css';
-import ParticipantData from "../components/participants/ParticipantData";
+import RecipientData from "../components/participants/recipients/RecipientData";
+import { notifications } from "@mantine/notifications";
 
 const RecipientsPage = () => {
 
@@ -19,6 +20,18 @@ const RecipientsPage = () => {
 
   const recipientService = participantService();
 
+  const fetchRecipients = async () => {
+    try {
+      setLoading(true);
+      const response = await recipientService.getParticipants('RECIPIENT', debouncedSearchTerm || undefined);
+      setRecipients(response);
+    } catch (error) {
+      setError(error as string);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
@@ -27,18 +40,7 @@ const RecipientsPage = () => {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  const fetchRecipients = async () => {
-    try {
-      setLoading(true);
-      const response = await recipientService.getParticipants('RECIPIENT', debouncedSearchTerm);
-      setRecipients(response);
-    } catch (error) {
-      setError(error as string);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  
   useEffect(() => {
     fetchRecipients();
   }, [debouncedSearchTerm]);
@@ -47,7 +49,7 @@ const RecipientsPage = () => {
     setError(null);
   }
 
-  const handleSelectParticipant = (participant: Participant) => {
+  const handleSelectRecipient = (participant: Participant) => {
     if (selectedRecipient?.participantId === participant.participantId) {
       setSelectedRecipient(null);
     } else {
@@ -57,25 +59,41 @@ const RecipientsPage = () => {
 
   const handleRefreshAfterUpdate = () => {
     fetchRecipients();
+    notifications.show({
+      title: 'Cliente actualizado',
+      message: 'El cliente ha sido actualizado correctamente',
+      color: 'green'
+    });
   };
 
   const handleRefreshAfterDelete = () => {
     setSelectedRecipient(null);
     fetchRecipients();
+    notifications.show({
+      title: 'Cliente eliminado',
+      message: 'El cliente ha sido eliminado correctamente',
+      color: 'green'
+    });
   };
 
   const handleRefreshAfterAdd = () => {
     fetchRecipients();
+    notifications.show({
+      title: 'Cliente creado',
+      message: 'El cliente ha sido creado correctamente',
+      color: 'green'
+    });
   };
 
   return (
     <div className="recipients-page">
       <div className="participant-list-wrapper">
         <ParticipantList
+          participantType="cliente"
           participants={recipients}
           loading={loading}
           setSearchTerm={setSearchTerm}
-          setSelectedParticipant={handleSelectParticipant}
+          setSelectedParticipant={handleSelectRecipient}
           selectedParticipant={selectedRecipient}
           isCreating={isCreating}
           setIsCreating={setIsCreating}
@@ -83,8 +101,8 @@ const RecipientsPage = () => {
       </div>
 
       <div className="participant-data-wrapper">
-        <ParticipantData
-          participant={selectedRecipient}
+        <RecipientData
+          recipient={selectedRecipient}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           isCreating={isCreating}

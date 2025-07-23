@@ -1,15 +1,18 @@
-import { AppShell, NavLink, Title, Group, Image, MantineProvider, createTheme, Box } from '@mantine/core'
+import { AppShell, NavLink, Title, Group, Image, MantineProvider, createTheme, Box, Tooltip } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 import { useState, useEffect } from 'react'
 import { 
   FileText, 
   Users, 
-  Building2
+  Building2,
+  AlertCircle
 } from 'lucide-react'
 import './App.css'
 import RecipientsPage from './pages/RecipientsPage'
 import ThemeToggleButton from './components/ThemeToggleButton'
 import { applyTheme, getSystemColorScheme } from './themes/themes'
 import type { ThemeName } from './themes/themes'
+import IssuersPage from './pages/IssuersPage'
 
 // Create custom Mantine theme that follows system preferences
 const theme = createTheme({
@@ -131,7 +134,17 @@ const App = () => {
           <Title order={1} mb="lg" className="main-title">
             {activeNav === 'documents' && 'Documentos'}
             {activeNav === 'recipients' && 'Clientes'}
-            {activeNav === 'issuers' && 'Facturadores'}
+            {activeNav === 'issuers' && (
+              <>
+                <span>Facturadores</span>
+              <Tooltip 
+                className="issuer-warning-tooltip" 
+                label="Actualmente no se puede editar la información del facturador, solo se puede editar la configuración"
+              >
+                <AlertCircle size={20} color="orange" />
+              </Tooltip>
+              </>
+            )}
           </Title>
           
           <div>
@@ -142,11 +155,12 @@ const App = () => {
               <RecipientsPage />
             )}
             {activeNav === 'issuers' && (
-              <p>Gestiona tus facturadores y sus configuraciones.</p>
+              <IssuersPage />
             )}
           </div>
         </AppShell.Main>
       </AppShell>
+      <Notifications position="top-right" zIndex={10000} />
     </MantineProvider>
   )
 }

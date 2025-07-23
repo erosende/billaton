@@ -14,7 +14,7 @@ export interface Participant {
 }
 
 export interface IssuerConfig {
-  configId: number;
+  issuerConfigId: number;
   issuerId: number;
   vat: number;
   paymentAccountNumber: string;
@@ -41,3 +41,9 @@ export const emptyParticipant: Participant = {
   }
 }
 
+export const emptyIssuerConfig: IssuerConfig = {
+  issuerConfigId: 0,
+  issuerId: 0,
+  vat: 0,
+  paymentAccountNumber: ''
+}

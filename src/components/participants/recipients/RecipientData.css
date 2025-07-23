@@ -1,0 +1,171 @@
+.recipient-data-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border: 2px solid #e0e0e0;
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.recipient-data-title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.recipient-data-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.recipient-data-button-group {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.recipient-data-title-address {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 40px;
+  margin-left: 10px;
+}
+
+.recipient-data-section-one {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-top: 10px;
+  max-width: 1000px;
+  gap: 40px;
+}
+
+.recipient-data-section-two {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-top: 10px;
+  gap: 40px;
+  max-width: 1000px;
+}
+
+.recipient-data-section-three {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-top: 10px;
+  max-width: 1000px;
+  gap: 40px;
+}
+
+.recipient-data-section-four {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-top: 10px;
+  max-width: 1000px;
+  gap: 40px;
+}
+
+.recipient-data-section-five {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-top: 10px;
+  max-width: 1000px;
+  gap: 40px;
+}
+
+.recipient-data-section-six {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-top: 10px;
+  max-width: 1000px;
+  gap: 40px;
+}
+
+.name-label {
+  display: flex;
+  flex-direction: column;
+  width: 33.33%;
+}
+
+.surnames-label {
+  display: flex;
+  flex-direction: column;
+  width: 66.66%;
+}
+
+.identification-type-label {
+  display: flex;
+  flex-direction: column;
+  width: 33.33%;
+}
+
+.identification-number-label {
+  display: flex;
+  flex-direction: column;
+  width: 33.33%;
+}
+
+.email-label {
+  display: flex;
+  flex-direction: column;
+  width: 66.66%;
+}
+
+.phone-label {
+  display: flex;
+  flex-direction: column;
+  width: 33.33%;
+}
+
+.address-label-line-one {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.address-label-line-two {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.address-label-postal-code {
+  display: flex;
+  width: 33.33%;
+  flex-direction: column;
+}
+
+.address-label-city {
+  display: flex;
+  width: 33.33%;
+  flex-direction: column;
+}
+
+.address-label-province {
+  display: flex;
+  width: 33.33%;
+  flex-direction: column;
+}
+
+.recipient-data-required-fields {
+  margin-left: 10px;
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+.recipient-data-validation-errors {
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
