@@ -7,6 +7,8 @@ import { participantService } from "../../../services/ParticipantService";
 import { validateRecipient } from "../../../utils/FormInputValidator";
 import LabelValue from "../../inputs/LabelValue";
 import LabelSelect from "../../inputs/LabelSelect";
+import type { IdentificationType } from "../../../interfaces/IdentificationType";
+import { useIdentificationTypeService } from "../../../services/IdentificationTypeService";
 
 const RecipientData = ({
   recipient,
@@ -34,6 +36,9 @@ const RecipientData = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [identificationTypes, setIdentificationTypes] = useState<IdentificationType[]>([]);
+
+  const identificationTypeService = useIdentificationTypeService();
 
   useEffect(() => {
     setFormData(recipient ? { ...recipient } : emptyParticipant);
@@ -52,6 +57,15 @@ const RecipientData = ({
       setValidationErrors([]);
     }
   }, [formData]);
+
+  useEffect(() => {    
+    const fetchIdentificationTypes = async () => {
+      const types = await identificationTypeService.getIdentificationTypes();
+      setIdentificationTypes(types);
+    };
+    
+    fetchIdentificationTypes();
+  }, []);
 
   const handleFieldChange = (fieldPath: string, value: string | number) => {
     if (!formData) return;
@@ -225,6 +239,7 @@ const RecipientData = ({
             value={formData?.identificationTypeId?.toString() || ""}
             enabled={isEditing || isCreating}
             handleChange={handleSelectChange('identificationTypeId')}
+            options={identificationTypes.map((type) => ({ value: type.identificationTypeId.toString(), label: type.name }))}
           />
           <LabelValue
             className="identification-number-label"

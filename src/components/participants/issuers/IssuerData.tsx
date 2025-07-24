@@ -7,6 +7,8 @@ import LabelSelect from "../../inputs/LabelSelect";
 import { Pencil, Save, X } from "lucide-react";
 import { participantService } from "../../../services/ParticipantService";
 import { validateIssuerConfig } from "../../../utils/FormInputValidator";
+import { useIdentificationTypeService } from "../../../services/IdentificationTypeService";
+import type { IdentificationType } from "../../../interfaces/IdentificationType";
 
 const IssuerData = ({
   issuer,
@@ -27,6 +29,9 @@ const IssuerData = ({
   const [isFormValid, setIsFormValid] = useState(false);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [config, setConfig] = useState<IssuerConfig | null>(null);
+  const [identificationTypes, setIdentificationTypes] = useState<IdentificationType[]>([]);
+
+  const identificationTypeService = useIdentificationTypeService();
 
   const issuerService = participantService();
 
@@ -39,6 +44,14 @@ const IssuerData = ({
     }
   }
 
+  useEffect(() => {
+    const fetchIdentificationTypes = async () => {
+      const types = await identificationTypeService.getIdentificationTypes();
+      setIdentificationTypes(types);
+    };
+
+    fetchIdentificationTypes();
+  }, []);
 
   useEffect(() => {
     setIssuerFormData(issuer ? { ...issuer } : emptyParticipant);
@@ -195,6 +208,7 @@ const IssuerData = ({
           label="Tipo de identificación"
           value={issuerFormData?.identificationTypeId?.toString() || ""}
           enabled={false}
+          options={identificationTypes.map((type) => ({ value: type.identificationTypeId.toString(), label: type.name }))}
         />
         <LabelValue
           className="identification-number-label"

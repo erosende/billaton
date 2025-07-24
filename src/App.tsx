@@ -13,6 +13,7 @@ import ThemeToggleButton from './components/ThemeToggleButton'
 import { applyTheme, getSystemColorScheme } from './themes/themes'
 import type { ThemeName } from './themes/themes'
 import IssuersPage from './pages/IssuersPage'
+import DocumentsPage from './pages/DocumentsPage'
 
 // Create custom Mantine theme that follows system preferences
 const theme = createTheme({
@@ -149,7 +150,7 @@ const App = () => {
           
           <div>
             {activeNav === 'documents' && (
-              <p>Gestiona tus facturas y documentos de facturación aquí.</p>
+              <DocumentsPage />
             )}
             {activeNav === 'recipients' && (
               <RecipientsPage />
