@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import LabelSelect from "../../inputs/LabelSelect";
 import "./DocumentPageHeader.css";
-import { participantService } from "../../../services/ParticipantService";
 import DatePicker from "../../inputs/DatePicker";
 import { Button } from "@mantine/core";
 import { Plus, Search } from "lucide-react";
@@ -35,8 +34,6 @@ const DocumentPageHeader = ({
 
   const [documentTypeOptions, setDocumentTypeOptions] = useState<{ label: string, value: string }[]>([]);
   const [recipientOptions, setRecipientOptions] = useState<{ label: string, value: string }[]>([]);
-
-  const recipientService = participantService();
 
   // TODO: Get document types from backend
   useEffect(() => {

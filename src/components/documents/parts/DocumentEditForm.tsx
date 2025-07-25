@@ -29,11 +29,11 @@ const DocumentEditForm = ({
     recipientId: document.recipientId,
   });
 
-  const [conceptRequest, setConceptRequest] = useState<ConceptRequest>({
+  const conceptRequest : ConceptRequest = {
     description: "",
     amount: 0,
     pricePerUnit: 0.0,
-  });
+  };
 
   const [concepts, setConcepts] = useState<Concept[]>([]);
   const [editingConceptId, setEditingConceptId] = useState<number | null>(null);
