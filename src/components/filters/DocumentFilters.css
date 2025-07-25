@@ -1,0 +1,24 @@
+.document-filters-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-bottom: 15px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.document-type-filter {
+  min-width: 200px;
+}
+
+.recipient-filter {
+  min-width: 250px;
+}
+
+.search-button {
+  margin-top: 30px;
+  min-width: 100px;
+  margin-left: auto;
+}

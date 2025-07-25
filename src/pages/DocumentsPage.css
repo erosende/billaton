@@ -1,0 +1,16 @@
+.documents-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.documents-page-container-filters {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.documents-page-container-list {
+  height: 700px;
+  margin-left: 10px;
+  margin-right: 10px;
+}

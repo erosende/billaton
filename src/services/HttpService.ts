@@ -19,6 +19,8 @@ interface ErrorResponse {
   [key: string]: any;
 }
 
+
+
 // Create axios instance with default configuration
 const createHttpClient = (config: HttpServiceConfig): AxiosInstance => {
   const client = axios.create({
@@ -81,6 +83,16 @@ class HttpService {
     }
   }
 
+  // GET method for file
+  async getForFile<T>(url: string, params?: Record<string, any>): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.client.get(url, { params, responseType: 'blob' });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error as AxiosError<ErrorResponse>);
+    }
+  }
+
   // POST method
   async post<T>(url: string, data?: any): Promise<BaseResponse<T>> {
     try {
@@ -111,6 +123,28 @@ class HttpService {
     }
   }
 
+  async postWithFile<T>(url: string, data?: any): Promise<BaseResponse<T>> {
+    try {
+      const response: AxiosResponse<BaseResponse<T>> = await this.client.post(url, data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error as AxiosError<ErrorResponse>);
+    }
+  }
+
+  async postForFile<T>(url: string, data?: any): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.client.post(url, data, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error as AxiosError<ErrorResponse>);
+    }
+  }
+
   // Error handler
   private handleError = (error: AxiosError<ErrorResponse>): Error => {
     if (error.response) {
@@ -129,22 +163,25 @@ class HttpService {
 }
 
 // Create and export the HTTP service instance with Billaton API base URL
-const httpService = new HttpService({
-  baseURL: 'https://foundation-production-1774.up.railway.app/api/billaton',
-  timeout: 15000,
-});
-
 // const httpService = new HttpService({
-//   baseURL: 'http://localhost:8080/api/billaton',
+//   baseURL: 'https://foundation-production-1774.up.railway.app/api/billaton',
 //   timeout: 15000,
 // });
+
+const httpService = new HttpService({
+  baseURL: 'http://localhost:8080/api/billaton',
+  timeout: 15000,
+});
 
 export const useHttpService = () => {
   return {
     get: httpService.get.bind(httpService),
+    getForFile: httpService.getForFile.bind(httpService),
     post: httpService.post.bind(httpService),
     put: httpService.put.bind(httpService),
     del: httpService.delete.bind(httpService),
+    postWithFile: httpService.postWithFile.bind(httpService),
+    postForFile: httpService.postForFile.bind(httpService),
   };
 };
 

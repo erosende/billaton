@@ -1,0 +1,7 @@
+.date-picker-container {
+	width: 220px;
+}
+
+.date-picker-container .value {
+	width: 100%;
+}

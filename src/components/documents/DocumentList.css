@@ -1,0 +1,32 @@
+.document-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.document-list-loader {
+  margin: 200px auto;
+}
+
+.document-card-list-container {
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 15px;
+  row-gap: 10px;
+  flex-wrap: wrap;
+}
+
+.document-card {
+  width: 250px;
+  height: 200px;
+}
+
+.document-card-list-container-pagination {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
