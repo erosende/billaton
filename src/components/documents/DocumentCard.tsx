@@ -1,4 +1,4 @@
-import { Card, Text, Badge, Group, Stack, rem, ActionIcon, ButtonGroup } from '@mantine/core';
+import { Card, Text, Badge, Group, Stack, ActionIcon, ButtonGroup } from '@mantine/core';
 import { Calendar, User, Building, Euro, Edit, Trash } from 'lucide-react';
 import type { Document } from '../../interfaces/Document';
 import './DocumentCard.css';
