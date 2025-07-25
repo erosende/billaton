@@ -79,12 +79,14 @@ const DocumentCreationForm = ({
       <Group display="flex" dir="row">
         <Select
           label="Facturador"
+          searchable
           data={getIssuerOptions()}
           value={documentRequest.issuerId.toString()}
           onChange={handleIssuerChange}
         />
         <Select
-          label="Receptor"
+          label="Cliente"
+          searchable
           data={getRecipientOptions(recipients)}
           value={documentRequest.recipientId.toString()}
           onChange={handleRecipientChange}
