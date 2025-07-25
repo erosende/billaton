@@ -9,7 +9,7 @@ const LabelSelect = (
     handleChange,
     options
   }: { 
-    className: string, 
+    className?: string, 
     label: string, 
     value: string | undefined, 
     enabled: boolean, handleChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void
@@ -17,7 +17,7 @@ const LabelSelect = (
   }) => {
 
   return (
-    <div className={className}>
+    <div className={className || ''}>
       <p className="label">{label}</p>
       <select className="value-select" disabled={!enabled} value={value} onChange={handleChange}>
         {options.map((option) => (

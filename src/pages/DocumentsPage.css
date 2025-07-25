@@ -1,12 +1,19 @@
-.documents-page-container {
+.documents-page-list-container {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.documents-page-container-filters {
-  margin-left: 10px;
-  margin-right: 10px;
+.documents-page-edit-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.documents-page-container-header {
+  margin-left: 30px;
+  margin-right: 83px;
+  margin-bottom: 10px;
 }
 
 .documents-page-container-list {

@@ -23,7 +23,7 @@ export interface PaginatedDocument {
 
 export interface DocumentRequest {
   documentTypeId: number;
-  documentDate: string;
+  documentDate: Date;
   issuerId: number;
   recipientId: number;
 }
@@ -40,4 +40,11 @@ export interface ConceptRequest {
   description: string;
   amount: number;
   pricePerUnit: number;
+}
+
+export const emptyDocumentRequest: DocumentRequest = {
+  documentTypeId: 1,
+  documentDate: new Date(),
+  issuerId: 0,
+  recipientId: 0
 }

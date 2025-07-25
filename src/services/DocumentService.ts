@@ -69,9 +69,9 @@ export const documentService = () => {
     }
   }
 
-  const createDocumentConcept = async (documentId: number, concept: ConceptRequest): Promise<void> => {
+  const createDocumentConcept = async (documentId: number, concept: ConceptRequest): Promise<number> => {
     try {
-      const response = await post<void>(`/documents/${documentId}/concepts`, concept);
+      const response = await post<number>(`/documents/${documentId}/concepts`, concept);
       return response.data;
     } catch (error) {
       console.error('Error creating document concept:', error);
@@ -89,9 +89,19 @@ export const documentService = () => {
     }
   }
 
+  const deleteDocumentConcept = async (documentId: number, conceptId: number): Promise<void> => {
+    try {
+      const response = await del<void>(`/documents/${documentId}/concepts/${conceptId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error deleting document concept:', error);
+      throw error;
+    }
+  }
+
   const generateDocumentFile = async (documentId: number): Promise<File> => {
     try {
-      const response = await postForFile<File>(`/documents/${documentId}/generate`);
+      const response = await postForFile<File>(`/documents/${documentId}/pdf/generate`);
       return response;
     } catch (error) {
       console.error('Error generating document:', error);
@@ -101,7 +111,7 @@ export const documentService = () => {
 
   const downloadDocumentFile = async (documentId: number): Promise<File> => {
     try {
-      const response = await getForFile<File>(`/documents/${documentId}/download`);
+      const response = await getForFile<File>(`/documents/${documentId}/pdf/download`);
       return response;
     } catch (error) {
       console.error('Error downloading document:', error);
@@ -117,6 +127,7 @@ export const documentService = () => {
     getDocumentConcepts,
     createDocumentConcept,
     updateDocumentConcept,
+    deleteDocumentConcept,
     generateDocumentFile,
     downloadDocumentFile,
   }

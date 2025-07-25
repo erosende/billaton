@@ -1,15 +1,17 @@
 import { Card, Text, Badge, Group, Stack, ActionIcon, ButtonGroup } from '@mantine/core';
-import { Calendar, User, Building, Euro, Edit, Trash } from 'lucide-react';
-import type { Document } from '../../interfaces/Document';
+import { Calendar, User, Building, Euro, Edit, Trash, Download, File } from 'lucide-react';
+import type { Document } from '../../../interfaces/Document';
 import './DocumentCard.css';
 
 interface DocumentCardProps {
   document: Document;
   onEdit?: (document: Document) => void;
   onDelete?: (document: Document) => void;
+  onDownload?: (document: Document) => void;
+  onGenerate?: (document: Document) => void;
 }
 
-const DocumentCard = ({ document, onEdit, onDelete }: DocumentCardProps) => {
+const DocumentCard = ({ document, onEdit, onDelete, onDownload, onGenerate }: DocumentCardProps) => {
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onEdit) {
@@ -21,6 +23,20 @@ const DocumentCard = ({ document, onEdit, onDelete }: DocumentCardProps) => {
     e.stopPropagation();
     if (onDelete) {
       onDelete(document);
+    }
+  };
+
+  const handleGenerateClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onGenerate) {
+      onGenerate(document);
+    }
+  };
+
+  const handleDownloadClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onDownload) {
+      onDownload(document);
     }
   };
 
@@ -56,13 +72,14 @@ const DocumentCard = ({ document, onEdit, onDelete }: DocumentCardProps) => {
   return (
     <Card
       shadow="sm"
-      padding="md"
-      radius="md"
+      padding="sm"
+      radius="sm"
       withBorder
       className="document-card"
     >
       <ButtonGroup className="document-card-buttons">
         <ActionIcon
+          title="Editar documento"
           variant="filled"
           color="blue"
           size="sm"
@@ -71,8 +88,30 @@ const DocumentCard = ({ document, onEdit, onDelete }: DocumentCardProps) => {
         >
           <Edit size={14} />
         </ActionIcon>
+        <ActionIcon
+          title="Generar documento"
+          variant="filled"
+          color="yellow"
+          size="sm"
+          className="generate-button"
+          onClick={handleGenerateClick}
+        >
+          <File size={14} />
+        </ActionIcon>
+        <ActionIcon
+          title={document.resourcePath ? "Descargar documento" : "No se puede descargar el documento porque no se ha generado previamente"}
+          variant="filled"
+          color="green"
+          size="sm"
+          className="download-button"
+          onClick={handleDownloadClick}
+          disabled={!document.resourcePath}
+        >
+          <Download size={14} />
+        </ActionIcon>
 
         <ActionIcon
+          title="Eliminar documento"
           variant="filled"
           color="red"
           size="sm"
@@ -90,7 +129,7 @@ const DocumentCard = ({ document, onEdit, onDelete }: DocumentCardProps) => {
           {getDocumentTypeBadge(document.documentTypeId)}
           <Group gap="xs">
             <Calendar size={16} />
-            <Text size="sm" c="dimmed">
+            <Text size="sm">
               {formatDate(document.documentDate)}
             </Text>
           </Group>
@@ -105,7 +144,7 @@ const DocumentCard = ({ document, onEdit, onDelete }: DocumentCardProps) => {
 
         <Group gap="xs" align="center">
           <User size={16} />
-          <Text size="sm" c="dimmed">
+          <Text size="sm" >
             {document.recipientName}
           </Text>
         </Group>
@@ -113,11 +152,11 @@ const DocumentCard = ({ document, onEdit, onDelete }: DocumentCardProps) => {
         <Group justify="space-between" align="center" mt="xs">
           <Group gap="xs">
             <Euro size={16} />
-            <Text size="sm" c="dimmed">
+            <Text size="sm">
               Total
             </Text>
           </Group>
-          <Text fw={700} size="lg" c="blue">
+          <Text fw={600} size="md" c="blue">
             {formatAmount(document.totalAmount)}
           </Text>
         </Group>

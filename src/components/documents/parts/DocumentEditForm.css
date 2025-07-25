@@ -1,0 +1,20 @@
+.document-edit-form-container {
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+.document-edit-form-header {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.document-edit-form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.document-edit-form-divider {
+  margin-top: 20px;
+}
