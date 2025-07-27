@@ -40,7 +40,7 @@ export const recipientValidationRules: Record<string, ValidationRules> = {
     maxLength: 20
   },
   email: {
-    required: true,
+    required: false,
     pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     custom: (value) => {
       if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -50,7 +50,7 @@ export const recipientValidationRules: Record<string, ValidationRules> = {
     }
   },
   phoneNumber: {
-    required: true,
+    required: false,
     minLength: 9,
     maxLength: 15,
     pattern: /^[0-9+\-\s]+$/,

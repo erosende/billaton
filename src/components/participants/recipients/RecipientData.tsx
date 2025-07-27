@@ -253,14 +253,14 @@ const RecipientData = ({
         <div className="recipient-data-section-three">
           <LabelValue
             className="email-label"
-            label="* Correo electrónico"
+            label="Correo electrónico"
             value={formData?.email || ""}
             enabled={isEditing || isCreating}
             handleChange={handleInputChange('email')}
           />
           <LabelValue
             className="phone-label"
-            label="* Teléfono"
+            label="Teléfono"
             value={formData?.phoneNumber || ""}
             enabled={isEditing || isCreating}
             handleChange={handleInputChange('phoneNumber')}
