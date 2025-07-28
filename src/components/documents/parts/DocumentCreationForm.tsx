@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { emptyDocumentRequest, type DocumentRequest } from "../../../interfaces/Document";
-import { Button, Group, Stack, Select } from "@mantine/core";
+import { Button, Group, Stack, Select, TextInput } from "@mantine/core";
 import type { Participant } from "../../../interfaces/Participant";
 import DatePicker from "../../inputs/DatePicker";
 
@@ -41,6 +41,10 @@ const DocumentCreationForm = ({
     }
   }
 
+  const handleDocumentCodeChange = (value: string) => {
+    setDocumentRequest({ ...documentRequest, documentCode: value });
+  }
+
   const handleDocumentDateChange = (date: Date | null) => {
     if (date) {
       setDocumentRequest({ ...documentRequest, documentDate: date });
@@ -69,6 +73,7 @@ const DocumentCreationForm = ({
           value={documentRequest.documentTypeId.toString()}
           onChange={handleDocumentTypeChange}
         />
+
         <DatePicker
           label="Fecha de documento"
           date={documentRequest.documentDate}
@@ -91,6 +96,16 @@ const DocumentCreationForm = ({
           value={documentRequest.recipientId.toString()}
           onChange={handleRecipientChange}
         />
+      </Group>
+
+      <Group display="flex" dir="row">
+        {documentRequest.documentTypeId === 1 && (
+        <TextInput
+          label="Número de factura"
+            value={documentRequest.documentCode ?? ""}
+            onChange={(event) => handleDocumentCodeChange(event.target.value)}
+          />
+        )}
       </Group>
 
       <Group display="flex" dir="row" justify="flex-end">

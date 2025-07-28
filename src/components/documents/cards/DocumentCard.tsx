@@ -56,15 +56,17 @@ const DocumentCard = ({ document, onEdit, onDelete, onDownload, onGenerate }: Do
     }).format(amount);
   };
 
-  const getDocumentTypeBadge = (documentTypeId: number) => {
+  const getDocumentTypeBadge = (documentTypeId: number, documentCode: string) => {
     const isInvoice = documentTypeId === 1;
+    const documentType = isInvoice ? "Factura" : "Presupuesto";
+    const documentCodeText = documentCode ? `#${documentCode}` : "";
     return (
       <Badge
         color={isInvoice ? 'blue' : 'orange'}
         variant="light"
         size="sm"
       >
-        {isInvoice ? 'Factura' : 'Presupuesto'}
+        {documentType} {documentCodeText}
       </Badge>
     );
   };
@@ -126,7 +128,7 @@ const DocumentCard = ({ document, onEdit, onDelete, onDownload, onGenerate }: Do
 
       <Stack gap="xs">
         <Group justify="space-between" align="flex-start">
-          {getDocumentTypeBadge(document.documentTypeId)}
+          {getDocumentTypeBadge(document.documentTypeId, document.documentCode)}
           <Group gap="xs">
             <Calendar size={16} />
             <Text size="sm">

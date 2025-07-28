@@ -1,4 +1,4 @@
-import { Pencil, Save, Trash, X } from "lucide-react";
+import { AlertTriangle, Pencil, Save, Trash, X } from "lucide-react";
 import { emptyParticipant, type Participant } from "../../../interfaces/Participant";
 import './RecipientData.css';
 import { Button, ButtonGroup, Divider, Modal, Text, Group, Popover, List } from "@mantine/core";
@@ -347,6 +347,8 @@ const RecipientData = ({
       >
         <Text size="sm" mb="md">
           ¿Estás seguro de que quieres eliminar este cliente? Esta acción no se puede deshacer.
+          <br /><br />
+          Todos los documentos asociados a este cliente dejarán de ser accesibles.
         </Text>
 
         {formData && (

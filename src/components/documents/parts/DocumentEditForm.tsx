@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Divider, Group, Select, Stack, Table, Text, NumberInput, Textarea } from "@mantine/core";
+import { Button, ButtonGroup, Divider, Group, Select, Stack, Table, Text, NumberInput, Textarea, TextInput } from "@mantine/core";
 import { type Concept, type ConceptRequest, type Document, type DocumentRequest } from "../../../interfaces/Document";
 import { useEffect, useState } from "react";
 import { PencilOff, Plus, Save, Trash, Edit, Check, X } from "lucide-react";
@@ -27,6 +27,7 @@ const DocumentEditForm = ({
     documentDate: new Date(document.documentDate),
     issuerId: document.issuerId,
     recipientId: document.recipientId,
+    documentCode: document.documentCode ?? "",
   });
 
   const conceptRequest : ConceptRequest = {
@@ -79,6 +80,10 @@ const DocumentEditForm = ({
 
   const handleRecipientChange = (value: string | null) => {
     setDocumentRequest({ ...documentRequest, recipientId: parseInt(value!) });
+  }
+
+  const handleDocumentCodeChange = (value: string) => {
+    setDocumentRequest({ ...documentRequest, documentCode: value });
   }
 
   const handleAddConcept = async () => {
@@ -189,6 +194,13 @@ const DocumentEditForm = ({
           value={documentRequest?.documentTypeId.toString()}
           onChange={handleDocumentTypeChange}
         />
+        {documentRequest.documentTypeId === 1 && (
+          <TextInput
+            label="Código de documento"
+            value={documentRequest?.documentCode ?? ""}
+            onChange={(event) => handleDocumentCodeChange(event.target.value)}
+          />
+        )}
         <Select
           searchable
           label="Facturador"

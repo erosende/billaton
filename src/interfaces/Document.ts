@@ -8,6 +8,7 @@ export interface Document {
   recipientId: number;
   recipientName: string;
   totalAmount: number;
+  documentCode: string;
 }
 
 export interface PaginatedDocument {
@@ -22,6 +23,7 @@ export interface PaginatedDocument {
 }
 
 export interface DocumentRequest {
+  documentCode: string | null;
   documentTypeId: number;
   documentDate: Date;
   issuerId: number;
@@ -43,6 +45,7 @@ export interface ConceptRequest {
 }
 
 export const emptyDocumentRequest: DocumentRequest = {
+  documentCode: "",
   documentTypeId: 1,
   documentDate: new Date(),
   issuerId: 0,
