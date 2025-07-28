@@ -1,4 +1,4 @@
-import { AlertTriangle, Pencil, Save, Trash, X } from "lucide-react";
+import { Pencil, Save, Trash, X } from "lucide-react";
 import { emptyParticipant, type Participant } from "../../../interfaces/Participant";
 import './RecipientData.css';
 import { Button, ButtonGroup, Divider, Modal, Text, Group, Popover, List } from "@mantine/core";
