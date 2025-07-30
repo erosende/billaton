@@ -165,7 +165,7 @@ class HttpService {
 
 // Create and export the HTTP service instance with Billaton API base URL
 const httpService = new HttpService({
-  baseURL: 'http://207.188.182.86:8080/api/billaton',
+  baseURL: 'https://foundation-server.duckdns.org:8080/api/billaton',
   timeout: 15000,
 });
 
