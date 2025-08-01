@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import DocumentsList from "../components/documents/parts/DocumentsList";
-import { documentService } from "../services/DocumentService";
+import { useDocumentService } from "../services/DocumentService";
 import type { Document, DocumentRequest } from "../interfaces/Document";
 import { Button, Group, Modal, Text } from "@mantine/core";
 import "./DocumentsPage.css";
 import DocumentPageHeader from "../components/documents/parts/DocumentPageHeader";
 import DocumentCreationForm from "../components/documents/parts/DocumentCreationForm";
 import type { Participant } from "../interfaces/Participant";
-import { participantService } from "../services/ParticipantService";
+import { useParticipantService } from "../services/ParticipantService";
 import { notifications } from "@mantine/notifications";
 import DocumentEditForm from "../components/documents/parts/DocumentEditForm";
 
@@ -40,8 +40,8 @@ const DocumentsPage = () => {
   const [issuers, setIssuers] = useState<Participant[]>([]);
   const [recipients, setRecipients] = useState<Participant[]>([]);
 
-  const documentsService = documentService();
-  const participantsService = participantService();
+  const documentsService = useDocumentService();
+  const participantsService = useParticipantService();
 
   const pageSize = 18;
 

@@ -3,7 +3,7 @@ import { emptyParticipant, type Participant } from "../../../interfaces/Particip
 import './RecipientData.css';
 import { Button, ButtonGroup, Divider, Modal, Text, Group, Popover, List } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { participantService } from "../../../services/ParticipantService";
+import { useParticipantService } from "../../../services/ParticipantService";
 import { validateRecipient } from "../../../utils/FormInputValidator";
 import LabelValue from "../../inputs/LabelValue";
 import LabelSelect from "../../inputs/LabelSelect";
@@ -104,7 +104,8 @@ const RecipientData = ({
 
     try {
       if (isCreating) {
-        await participantService().createRecipientParticipant(formData);
+        const participantSvc = useParticipantService();
+      await participantSvc.createRecipientParticipant(formData);
         console.log('Participant created successfully:', formData);
         onAdd?.();
       } else {

@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import type { AxiosInstance, AxiosResponse } from 'axios';
+import { supabase } from '../config/supabase';
 
 // Base response type from API documentation
 interface BaseResponse<T = any> {
@@ -33,12 +34,15 @@ const createHttpClient = (config: HttpServiceConfig): AxiosInstance => {
 
   // Request interceptor for adding auth tokens if needed
   client.interceptors.request.use(
-    (config) => {
-      // Add authorization header if token exists
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    async (config) => {
+      // Get the current session from Supabase
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // Add authorization header if session and token exist
+      if (session?.access_token) {
+        config.headers.Authorization = `Bearer ${session.access_token}`;
       }
+      
       return config;
     },
     (error) => {
@@ -49,12 +53,12 @@ const createHttpClient = (config: HttpServiceConfig): AxiosInstance => {
   // Response interceptor for handling common errors
   client.interceptors.response.use(
     (response) => response,
-    (error: AxiosError) => {
+    async (error: AxiosError) => {
       // Handle common HTTP errors
       if (error.response?.status === 401) {
-        // Handle unauthorized access
-        localStorage.removeItem('authToken');
-        // Could redirect to login page here
+        // Handle unauthorized access - sign out from Supabase
+        await supabase.auth.signOut();
+        // The AuthContext will handle the redirect to login page
       }
       return Promise.reject(error);
     }

@@ -5,7 +5,7 @@ import { PencilOff, Plus, Save, Trash, Edit, Check, X } from "lucide-react";
 import type { Participant } from "../../../interfaces/Participant";
 import "./DocumentEditForm.css";
 import DatePicker from "../../inputs/DatePicker";
-import { documentService } from "../../../services/DocumentService";
+import { useDocumentService } from "../../../services/DocumentService";
 import { notifications } from "@mantine/notifications";
 
 const DocumentEditForm = ({
@@ -44,7 +44,7 @@ const DocumentEditForm = ({
     pricePerUnit: 0.0,
   });
 
-  const documentsService = documentService();
+  const documentsService = useDocumentService();
 
   const documentTypes = [
     { value: '1', label: 'Factura' },

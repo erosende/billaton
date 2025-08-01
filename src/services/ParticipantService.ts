@@ -1,8 +1,8 @@
-import { useHttpService } from './HttpService';
+import { useAuthenticatedHttpService } from '../hooks/useAuthenticatedHttpService';
 import type { Participant, IssuerConfig } from '../interfaces/Participant';
 
-export const participantService = () => {
-  const { get, post, put, del } = useHttpService();
+export const useParticipantService = () => {
+  const { get, post, put, del } = useAuthenticatedHttpService();
 
   const createRecipientParticipant = async (participantData: Participant): Promise<Participant> => {
     try {
