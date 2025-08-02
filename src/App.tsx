@@ -14,6 +14,8 @@ import { applyTheme, getSystemColorScheme } from './themes/themes'
 import type { ThemeName } from './themes/themes'
 import IssuersPage from './pages/IssuersPage'
 import DocumentsPage from './pages/DocumentsPage'
+import AuthGuard from './components/auth/AuthGuard'
+import UserMenu from './components/auth/UserMenu'
 
 // Create custom Mantine theme that follows system preferences
 const theme = createTheme({
@@ -69,98 +71,103 @@ const App = () => {
 
   return (
     <MantineProvider theme={theme} forceColorScheme={colorScheme}>
-      <AppShell
-        navbar={{
-          width: 200,
-          breakpoint: 'sm',
-        }}
-        padding="md"
-      >
-        <AppShell.Navbar p="md" style={{ display: 'flex', flexDirection: 'column' }}>
-          <Box style={{ flex: 1 }}>
-            <Group mb="xl">
-              <div className="logo-container">
-                <Image src="/billaton_logo.png" alt="Billaton" width={100} height={100} fit='contain' />
-                <div className="logo-text-container">
-                  <Title order={3} className="logo-title">BILL</Title>
-                  <Title order={3} className="logo-title">A</Title>
-                  <Title order={3} className="logo-title">TON</Title>
+      <AuthGuard>
+        <AppShell
+          navbar={{
+            width: 200,
+            breakpoint: 'sm',
+          }}
+          padding="md"
+        >
+          <AppShell.Navbar p="md" style={{ display: 'flex', flexDirection: 'column' }}>
+            <Box style={{ flex: 1 }}>
+              <Group mb="xl">
+                <div className="logo-container">
+                  <Image src="/billaton_logo.png" alt="Billaton" width={100} height={100} fit='contain' />
+                  <div className="logo-text-container">
+                    <Title order={3} className="logo-title">BILL</Title>
+                    <Title order={3} className="logo-title">A</Title>
+                    <Title order={3} className="logo-title">TON</Title>
+                  </div>
                 </div>
-              </div>
-            </Group>
+              </Group>
 
-            <NavLink
-              href="#"
-              label="Documentos"
-              leftSection={<FileText size={20} />}
-              active={activeNav === 'documents'}
-              onClick={() => handleNavClick('documents')}
-              aria-label="Navegar a documentos"
-              tabIndex={0}
-            />
+              <NavLink
+                href="#"
+                label="Documentos"
+                leftSection={<FileText size={20} />}
+                active={activeNav === 'documents'}
+                onClick={() => handleNavClick('documents')}
+                aria-label="Navegar a documentos"
+                tabIndex={0}
+              />
 
-            <NavLink
-              href="#"
-              label="Clientes"
-              leftSection={<Users size={20} />}
-              active={activeNav === 'recipients'}
-              onClick={() => handleNavClick('recipients')}
-              aria-label="Navegar a clientes"
-              tabIndex={0}
-            />
+              <NavLink
+                href="#"
+                label="Clientes"
+                leftSection={<Users size={20} />}
+                active={activeNav === 'recipients'}
+                onClick={() => handleNavClick('recipients')}
+                aria-label="Navegar a clientes"
+                tabIndex={0}
+              />
 
-            <NavLink
-              href="#"
-              label="Facturadores"
-              leftSection={<Building2 size={20} />}
-              active={activeNav === 'issuers'}
-              onClick={() => handleNavClick('issuers')}
-              aria-label="Navegar a facturadores"
-              tabIndex={0}
-            />
-          </Box>
+              <NavLink
+                href="#"
+                label="Facturadores"
+                leftSection={<Building2 size={20} />}
+                active={activeNav === 'issuers'}
+                onClick={() => handleNavClick('issuers')}
+                aria-label="Navegar a facturadores"
+                tabIndex={0}
+              />
+            </Box>
 
-          {/* Theme toggle button at bottom right */}
-          <Box style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'auto' }}>
-            <ThemeToggleButton
-              currentTheme={colorScheme}
-              onToggle={handleThemeToggle}
-              className="theme-toggle-button"
-            />
-          </Box>
+            {/* User menu and theme toggle at bottom */}
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto' }}>
+              <UserMenu />
+            </Box>
 
-        </AppShell.Navbar>
+          </AppShell.Navbar>
 
-        <AppShell.Main>
-          <Title order={1} mb="lg" className="main-title">
-            {activeNav === 'documents' && 'Documentos'}
-            {activeNav === 'recipients' && 'Clientes'}
-            {activeNav === 'issuers' && (
-              <>
-                <span>Facturadores</span>
-              <Tooltip 
-                className="issuer-warning-tooltip" 
-                label="Actualmente no se puede editar la información del facturador, solo se puede editar la configuración"
-              >
-                <AlertCircle size={20} color="orange" />
-              </Tooltip>
-              </>
-            )}
-          </Title>
-          
-          <div>
-            {activeNav === 'documents' && (
-              <DocumentsPage />
-            )}
-            {activeNav === 'recipients' && (
-              <RecipientsPage />
-            )}
-            {activeNav === 'issuers' && (
-              <IssuersPage />
-            )}
-          </div>
-        </AppShell.Main>
-      </AppShell>
+          <AppShell.Main>
+            <Title order={1} mb="lg" className="main-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              {activeNav === 'documents' && 'Documentos'}
+              {activeNav === 'recipients' && 'Clientes'}
+              {activeNav === 'issuers' && (
+                <>
+                  <span>Facturadores</span>
+                <Tooltip 
+                  className="issuer-warning-tooltip" 
+                  label="Actualmente no se puede editar la información del facturador, solo se puede editar la configuración"
+                >
+                  <AlertCircle size={20} color="orange" />
+                </Tooltip>
+                </>
+              )}
+              <Box style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '1rem' }}>
+                <ThemeToggleButton
+                  currentTheme={colorScheme}
+                  onToggle={handleThemeToggle}
+                  className="theme-toggle-button"
+                />
+              </Box>
+            </Title>
+            
+            <div>
+              {activeNav === 'documents' && (
+                <DocumentsPage />
+              )}
+              {activeNav === 'recipients' && (
+                <RecipientsPage />
+              )}
+              {activeNav === 'issuers' && (
+                <IssuersPage />
+              )}
+            </div>
+          </AppShell.Main>
+        </AppShell>
+      </AuthGuard>
       <Notifications position="top-right" zIndex={10000} />
     </MantineProvider>
   )

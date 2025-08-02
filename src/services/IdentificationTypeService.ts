@@ -1,8 +1,8 @@
-import { useHttpService } from './HttpService';
+import { useAuthenticatedHttpService } from '../hooks/useAuthenticatedHttpService';
 import type { IdentificationType } from '../interfaces/IdentificationType';
 
 export const useIdentificationTypeService = () => {
-  const { get } = useHttpService();
+  const { get } = useAuthenticatedHttpService();
 
   const getIdentificationTypes = async (): Promise<IdentificationType[]> => {
     try {

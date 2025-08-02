@@ -5,7 +5,7 @@ import './IssuerData.css';
 import LabelValue from "../../inputs/LabelValue";
 import LabelSelect from "../../inputs/LabelSelect";
 import { Pencil, Save, X } from "lucide-react";
-import { participantService } from "../../../services/ParticipantService";
+import { useParticipantService } from "../../../services/ParticipantService";
 import { validateIssuerConfig } from "../../../utils/FormInputValidator";
 import { useIdentificationTypeService } from "../../../services/IdentificationTypeService";
 import type { IdentificationType } from "../../../interfaces/IdentificationType";
@@ -33,7 +33,7 @@ const IssuerData = ({
 
   const identificationTypeService = useIdentificationTypeService();
 
-  const issuerService = participantService();
+  const issuerService = useParticipantService();
 
   const fetchConfig = async () => {
     try {

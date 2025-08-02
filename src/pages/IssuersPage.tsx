@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Participant } from "../interfaces/Participant";
-import { participantService } from "../services/ParticipantService";
+import { useParticipantService } from "../services/ParticipantService";
 import ParticipantList from "../components/participants/ParticipantList";
 import './IssuersPage.css';
 import { Modal, Text } from "@mantine/core";
@@ -17,7 +17,7 @@ const IssuersPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
 
-  const issuerService = participantService();
+  const issuerService = useParticipantService();
 
   const fetchIssuers = async () => {
     try {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Participant } from "../interfaces/Participant";
-import { participantService } from "../services/ParticipantService";
+import { useParticipantService } from "../services/ParticipantService";
 import { Modal, Text } from "@mantine/core";
 import ParticipantList from "../components/participants/ParticipantList";
 import './RecipientsPage.css';
@@ -18,7 +18,7 @@ const RecipientsPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
 
-  const recipientService = participantService();
+  const recipientService = useParticipantService();
 
   const fetchRecipients = async () => {
     try {

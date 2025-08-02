@@ -1,8 +1,8 @@
 import type { Concept, ConceptRequest, DocumentRequest, PaginatedDocument } from "../interfaces/Document";
-import { useHttpService } from "./HttpService";
+import { useAuthenticatedHttpService } from "../hooks/useAuthenticatedHttpService";
 
-export const documentService = () => {
-  const { get, post, put, del, getForFile, postForFile } = useHttpService();
+export const useDocumentService = () => {
+  const { get, post, put, del, getForFile, postForFile } = useAuthenticatedHttpService();
 
   const getDocumentsPage = async (
     page: number,
