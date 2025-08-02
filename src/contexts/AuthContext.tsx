@@ -2,9 +2,16 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../config/supabase'
 
 // Define types based on what Supabase returns
+type UserMetadata = {
+  display_name?: string
+  email_verified?: boolean
+  [key: string]: any
+}
+
 type User = {
   id: string
   email?: string
+  user_metadata?: UserMetadata
   [key: string]: any
 } | null
 
@@ -18,11 +25,30 @@ type AuthError = {
   message: string
 } | null
 
+// Helper function to get user display name
+const getUserDisplayName = (user: User): string => {
+  if (!user) return 'Usuario'
+  
+  // Try display_name from user_metadata first
+  if (user.user_metadata?.display_name) {
+    return user.user_metadata.display_name
+  }
+  
+  // Fallback to email username part
+  if (user.email) {
+    return user.email.split('@')[0]
+  }
+  
+  // Final fallback
+  return 'Usuario'
+}
+
 // Define the authentication context interface
 interface AuthContextType {
   user: User
   session: Session
   loading: boolean
+  getUserDisplayName: (user: User) => string
   signIn: (email: string, password: string) => Promise<{ error: AuthError }>
   signOut: () => Promise<{ error: AuthError }>
 }
@@ -106,6 +132,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     session,
     loading,
+    getUserDisplayName,
     signIn,
     signOut,
   }

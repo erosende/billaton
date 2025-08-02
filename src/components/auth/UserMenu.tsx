@@ -1,10 +1,10 @@
 import React from 'react'
-import { Menu, Button, Text, Group, Avatar } from '@mantine/core'
+import { Menu, Button, Text, Avatar } from '@mantine/core'
 import { LogOut, User } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 
 const UserMenu: React.FC = () => {
-  const { user, signOut } = useAuth()
+  const { user, signOut, getUserDisplayName } = useAuth()
 
   const handleSignOut = async () => {
     try {
@@ -18,16 +18,19 @@ const UserMenu: React.FC = () => {
     return null
   }
 
+  const displayName = getUserDisplayName(user)
+  const avatarLetter = displayName.charAt(0).toUpperCase()
+
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
         <Button 
           variant="subtle" 
-          leftSection={<Avatar size="sm" radius="xl">{user.email?.charAt(0).toUpperCase()}</Avatar>}
-          style={{ height: 'auto', padding: '0.5rem' }}
+          leftSection={<Avatar size="sm" radius="xl">{avatarLetter}</Avatar>}
+          style={{ height: 'auto', padding: '0.5rem', display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}
         >
           <Text size="sm" truncate style={{ maxWidth: '120px' }}>
-            {user.email}
+            {displayName}
           </Text>
         </Button>
       </Menu.Target>
@@ -39,7 +42,7 @@ const UserMenu: React.FC = () => {
           leftSection={<User size={14} />}
           disabled
         >
-          <Text size="sm">{user.email?.split('@')[0]}</Text>
+          <Text size="sm">{displayName}</Text>
         </Menu.Item>
 
         <Menu.Divider />

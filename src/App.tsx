@@ -126,19 +126,12 @@ const App = () => {
             {/* User menu and theme toggle at bottom */}
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto' }}>
               <UserMenu />
-              <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <ThemeToggleButton
-                  currentTheme={colorScheme}
-                  onToggle={handleThemeToggle}
-                  className="theme-toggle-button"
-                />
-              </Box>
             </Box>
 
           </AppShell.Navbar>
 
           <AppShell.Main>
-            <Title order={1} mb="lg" className="main-title">
+            <Title order={1} mb="lg" className="main-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
               {activeNav === 'documents' && 'Documentos'}
               {activeNav === 'recipients' && 'Clientes'}
               {activeNav === 'issuers' && (
@@ -152,6 +145,13 @@ const App = () => {
                 </Tooltip>
                 </>
               )}
+              <Box style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '1rem' }}>
+                <ThemeToggleButton
+                  currentTheme={colorScheme}
+                  onToggle={handleThemeToggle}
+                  className="theme-toggle-button"
+                />
+              </Box>
             </Title>
             
             <div>
