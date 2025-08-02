@@ -90,7 +90,7 @@ export const useAuthenticatedHttpService = () => {
   // Create HTTP client with current auth token
   const client = useMemo(() => {
     const config = {
-      baseURL: 'http://localhost:8080/api/billaton',
+      baseURL: 'https://foundation-server.duckdns.org/api/billaton',
       timeout: 15000,
     };
 
