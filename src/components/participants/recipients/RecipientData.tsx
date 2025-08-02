@@ -109,7 +109,7 @@ const RecipientData = ({
         console.log('Participant created successfully:', formData);
         onAdd?.();
       } else {
-        await participantService().updateParticipant(formData.participantId, formData);
+        await useParticipantService().updateParticipant(formData.participantId, formData);
         console.log('Participant updated successfully:', formData);
         onUpdate?.();
       }
@@ -135,7 +135,7 @@ const RecipientData = ({
   const handleConfirmDelete = async () => {
     try {
       if (formData) {
-        await participantService().deleteRecipientParticipant(formData.participantId);
+        await useParticipantService().deleteRecipientParticipant(formData.participantId);
         onDelete?.();
       }
       console.log('Deleting participant:', formData);
