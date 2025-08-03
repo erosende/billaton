@@ -169,7 +169,7 @@ class HttpService {
 
 // Create and export the HTTP service instance with Billaton API base URL
 const httpService = new HttpService({
-  baseURL: 'https://foundation-server.duckdns.org/api/billaton',
+  baseURL: 'https://foundation.edgarrosende.com/api/billaton',
   timeout: 15000,
 });
 
