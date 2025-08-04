@@ -20,7 +20,8 @@ const DocumentCreationForm = ({
 
   const documentTypes = [
     { value: "1", label: "Factura" },
-    { value: "2", label: "Presupuesto" }
+    { value: "2", label: "Presupuesto" },
+    { value: "3", label: "Albarán" }
   ]
 
   const getIssuerOptions = () => {
@@ -99,9 +100,9 @@ const DocumentCreationForm = ({
       </Group>
 
       <Group display="flex" dir="row">
-        {documentRequest.documentTypeId === 1 && (
+        {documentRequest.documentTypeId === 1 || documentRequest.documentTypeId === 3 && (
         <TextInput
-          label="Número de factura"
+          label="Número de documento"
             value={documentRequest.documentCode ?? ""}
             onChange={(event) => handleDocumentCodeChange(event.target.value)}
           />

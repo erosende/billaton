@@ -48,7 +48,8 @@ const DocumentEditForm = ({
 
   const documentTypes = [
     { value: '1', label: 'Factura' },
-    { value: '2', label: 'Presupuesto' }
+    { value: '2', label: 'Presupuesto' },
+    { value: "3", label: "Albarán" }
   ];
 
   useEffect(() => {

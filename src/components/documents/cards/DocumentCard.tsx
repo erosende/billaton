@@ -57,12 +57,32 @@ const DocumentCard = ({ document, onEdit, onDelete, onDownload, onGenerate }: Do
   };
 
   const getDocumentTypeBadge = (documentTypeId: number, documentCode: string) => {
-    const isInvoice = documentTypeId === 1;
-    const documentType = isInvoice ? "Factura" : "Presupuesto";
+    let documentType: string;
+    let color: string;
+    
+    switch (documentTypeId) {
+      case 1:
+        documentType = "Factura";
+        color = "blue";
+        break;
+      case 2:
+        documentType = "Presupuesto";
+        color = "orange";
+        break;
+      case 3:
+        documentType = "Albarán";
+        color = "green";
+        break;
+      default:
+        documentType = "Documento";
+        color = "gray";
+        break;
+    }
+    
     const documentCodeText = documentCode ? `#${documentCode}` : "";
     return (
       <Badge
-        color={isInvoice ? 'blue' : 'orange'}
+        color={color}
         variant="light"
         size="sm"
       >

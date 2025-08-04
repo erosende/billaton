@@ -49,6 +49,10 @@ const DocumentPageHeader = ({
       {
         label: 'Presupuesto',
         value: '2'
+      },
+      {
+        label: 'Albarán',
+        value: '3'
       }
     ])
   }, []);
