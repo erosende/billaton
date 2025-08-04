@@ -39,6 +39,7 @@ const RecipientData = ({
   const [identificationTypes, setIdentificationTypes] = useState<IdentificationType[]>([]);
 
   const identificationTypeService = useIdentificationTypeService();
+  const participantService = useParticipantService();
 
   useEffect(() => {
     setFormData(recipient ? { ...recipient } : emptyParticipant);
@@ -104,12 +105,11 @@ const RecipientData = ({
 
     try {
       if (isCreating) {
-        const participantSvc = useParticipantService();
-      await participantSvc.createRecipientParticipant(formData);
+        await participantService.createRecipientParticipant(formData);
         console.log('Participant created successfully:', formData);
         onAdd?.();
       } else {
-        await useParticipantService().updateParticipant(formData.participantId, formData);
+        await participantService.updateParticipant(formData.participantId, formData);
         console.log('Participant updated successfully:', formData);
         onUpdate?.();
       }
@@ -135,7 +135,7 @@ const RecipientData = ({
   const handleConfirmDelete = async () => {
     try {
       if (formData) {
-        await useParticipantService().deleteRecipientParticipant(formData.participantId);
+        await participantService.deleteRecipientParticipant(formData.participantId);
         onDelete?.();
       }
       console.log('Deleting participant:', formData);
