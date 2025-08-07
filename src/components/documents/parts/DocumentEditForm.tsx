@@ -195,13 +195,11 @@ const DocumentEditForm = ({
           value={documentRequest?.documentTypeId.toString()}
           onChange={handleDocumentTypeChange}
         />
-        {documentRequest.documentTypeId === 1 || documentRequest.documentTypeId === 3 && (
           <TextInput
             label="Código de documento"
             value={documentRequest?.documentCode ?? ""}
             onChange={(event) => handleDocumentCodeChange(event.target.value)}
           />
-        )}
         <Select
           searchable
           label="Facturador"
