@@ -100,13 +100,11 @@ const DocumentCreationForm = ({
       </Group>
 
       <Group display="flex" dir="row">
-        {documentRequest.documentTypeId === 1 || documentRequest.documentTypeId === 3 && (
         <TextInput
           label="Número de documento"
             value={documentRequest.documentCode ?? ""}
             onChange={(event) => handleDocumentCodeChange(event.target.value)}
-          />
-        )}
+        />
       </Group>
 
       <Group display="flex" dir="row" justify="flex-end">
