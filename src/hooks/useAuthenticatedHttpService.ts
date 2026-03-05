@@ -90,7 +90,7 @@ export const useAuthenticatedHttpService = () => {
   // Create HTTP client with current auth token
   const client = useMemo(() => {
     const config = {
-      baseURL: 'https://foundation.edgarrosende.com/api/billaton',
+      baseURL: 'https://billaton.edgarrosende.com/api/billaton',
       timeout: 15000,
     };
 
